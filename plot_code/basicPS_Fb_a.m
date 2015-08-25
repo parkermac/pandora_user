@@ -16,25 +16,33 @@ Fb10 = log10(Fb10);
 
 Fb10 = double(Fb10); %needed for the PNWTOX output
 
-% Full domain
-subplot(121)
-pcolor(G.lon_rho,G.lat_rho,Fb10);
-shading interp
-cvec = [-3 -1.3]; caxis(cvec);
-Z_dar;
-xlabel('Longitude (deg)')
-ylabel('Latitude (deg)')
-Z_addcoast('regional',Tdir.coast);
+colormap jet
 
-% Puget Sound
-subplot(122)
-pcolor(G.lon_rho,G.lat_rho,Fb10);
+two_panel = 0;
+cvec = [-3 -1.3]; 
+
+if two_panel
+    % Full domain
+    subplot(121)
+    Z_pcolorcen(G.lon_rho,G.lat_rho,Fb10);
+    shading flat
+    caxis(cvec);
+    Z_dar;
+    xlabel('Longitude (deg)')
+    ylabel('Latitude (deg)')
+    Z_addcoast('combined',Tdir.coast);
+    
+    % Puget Sound
+    subplot(122)
+end
+Z_pcolorcen(G.lon_rho,G.lat_rho,Fb10);
 axis([-123.8 -122 47 48.9]);
-shading interp
+shading flat
 caxis(cvec);
 colorbar('Eastoutside');
 Z_dar;
-title('log10(Fb) (W m^{-2}) ','fontweight','bold')
+title('log_{10}(Fb) (W m^{-2}) ','fontweight','bold')
+ylabel('Latitude (deg)')
 xlabel('Longitude (deg)')
 Z_info(basename,tt,T,'ll');
 Z_addcoast('combined',Tdir.coast);
